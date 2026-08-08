@@ -11,7 +11,7 @@ const equipmentQuery = queryOptions({
   queryFn: () => listEquipment(),
 });
 
-export const Route = createFileRoute("/maquinaria")({
+export const Route = createFileRoute("/maquinaria/")({
   head: () => ({
     meta: [
       { title: "Maquinaria pesada en renta | Grupo RMC El Salvador" },
