@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MaquinariaIndexRouteImport } from './routes/maquinaria.index'
+import { Route as MaquinariaSlugRouteImport } from './routes/maquinaria.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const MaquinariaIndexRoute = MaquinariaIndexRouteImport.update({
   path: '/maquinaria/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MaquinariaSlugRoute = MaquinariaSlugRouteImport.update({
+  id: '/maquinaria/$slug',
+  path: '/maquinaria/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria/': typeof MaquinariaIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria': typeof MaquinariaIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria/': typeof MaquinariaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/maquinaria/'
+  fullPaths: '/' | '/maquinaria/$slug' | '/maquinaria/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/maquinaria'
-  id: '__root__' | '/' | '/maquinaria/'
+  to: '/' | '/maquinaria/$slug' | '/maquinaria'
+  id: '__root__' | '/' | '/maquinaria/$slug' | '/maquinaria/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MaquinariaSlugRoute: typeof MaquinariaSlugRoute
   MaquinariaIndexRoute: typeof MaquinariaIndexRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MaquinariaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/maquinaria/$slug': {
+      id: '/maquinaria/$slug'
+      path: '/maquinaria/$slug'
+      fullPath: '/maquinaria/$slug'
+      preLoaderRoute: typeof MaquinariaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MaquinariaSlugRoute: MaquinariaSlugRoute,
   MaquinariaIndexRoute: MaquinariaIndexRoute,
 }
 export const routeTree = rootRouteImport
