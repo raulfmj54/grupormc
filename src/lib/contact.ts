@@ -41,11 +41,11 @@ export const waEquipmentLink = (name: string) =>
 export type QuoteMessageInput = {
   fullName: string;
   requestType: string;
-  item?: string | null;
-  location?: string | null;
-  startDate?: string | null;
-  rentalDuration?: string | null;
-  comments?: string | null;
+  item?: string | null | undefined;
+  location?: string | null | undefined;
+  startDate?: string | null | undefined;
+  rentalDuration?: string | null | undefined;
+  comments?: string | null | undefined;
 };
 
 export function buildQuoteMessage(input: QuoteMessageInput): string {
