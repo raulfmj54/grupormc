@@ -10,12 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RepuestosRouteImport } from './routes/repuestos'
+import { Route as ServiciosRouteImport } from './routes/servicios'
 import { Route as MaquinariaIndexRouteImport } from './routes/maquinaria.index'
 import { Route as MaquinariaSlugRouteImport } from './routes/maquinaria.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RepuestosRoute = RepuestosRouteImport.update({
+  id: '/repuestos',
+  path: '/repuestos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiciosRoute = ServiciosRouteImport.update({
+  id: '/servicios',
+  path: '/servicios',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MaquinariaIndexRoute = MaquinariaIndexRouteImport.update({
@@ -31,30 +43,45 @@ const MaquinariaSlugRoute = MaquinariaSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/repuestos': typeof RepuestosRoute
+  '/servicios': typeof ServiciosRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria/': typeof MaquinariaIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/repuestos': typeof RepuestosRoute
+  '/servicios': typeof ServiciosRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria': typeof MaquinariaIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/repuestos': typeof RepuestosRoute
+  '/servicios': typeof ServiciosRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria/': typeof MaquinariaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/maquinaria/$slug' | '/maquinaria/'
+  fullPaths:
+    '/' | '/repuestos' | '/servicios' | '/maquinaria/$slug' | '/maquinaria/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/maquinaria/$slug' | '/maquinaria'
-  id: '__root__' | '/' | '/maquinaria/$slug' | '/maquinaria/'
+  to: '/' | '/repuestos' | '/servicios' | '/maquinaria/$slug' | '/maquinaria'
+  id:
+    | '__root__'
+    | '/'
+    | '/repuestos'
+    | '/servicios'
+    | '/maquinaria/$slug'
+    | '/maquinaria/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RepuestosRoute: typeof RepuestosRoute
+  ServiciosRoute: typeof ServiciosRoute
   MaquinariaSlugRoute: typeof MaquinariaSlugRoute
   MaquinariaIndexRoute: typeof MaquinariaIndexRoute
 }
@@ -66,6 +93,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/repuestos': {
+      id: '/repuestos'
+      path: '/repuestos'
+      fullPath: '/repuestos'
+      preLoaderRoute: typeof RepuestosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/servicios': {
+      id: '/servicios'
+      path: '/servicios'
+      fullPath: '/servicios'
+      preLoaderRoute: typeof ServiciosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/maquinaria/': {
@@ -87,6 +128,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RepuestosRoute: RepuestosRoute,
+  ServiciosRoute: ServiciosRoute,
   MaquinariaSlugRoute: MaquinariaSlugRoute,
   MaquinariaIndexRoute: MaquinariaIndexRoute,
 }
