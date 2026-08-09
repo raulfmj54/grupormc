@@ -87,7 +87,7 @@ function ServiciosPage() {
             key={service.title}
             className="flex flex-col rounded-lg border border-border bg-card p-7"
           >
-            <service.icon className="size-8 text-primary" aria-hidden="true" />
+            <service.icon className="size-8 text-icon" aria-hidden="true" />
             <h2 className="mt-4 font-display text-xl tracking-wide text-card-foreground uppercase">
               {service.title}
             </h2>
