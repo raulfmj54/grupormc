@@ -128,7 +128,7 @@ function Index() {
               to={pillar.to}
               className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary"
             >
-              <pillar.icon className="size-8 text-primary" aria-hidden="true" />
+              <pillar.icon className="size-8 text-icon" aria-hidden="true" />
               <h3 className="mt-4 font-display text-lg tracking-wide text-card-foreground uppercase">
                 {pillar.title}
               </h3>
