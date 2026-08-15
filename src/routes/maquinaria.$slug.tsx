@@ -46,7 +46,7 @@ export const Route = createFileRoute("/maquinaria/$slug")({
     <div className="mx-auto max-w-3xl px-4 py-20 text-center">
       <h1 className="font-display text-3xl uppercase">Equipo no encontrado</h1>
       <Link to="/maquinaria" className="mt-6 inline-block text-primary underline">
-        Ver toda la maquinaria
+        Ver todos los equipos en renta
       </Link>
     </div>
   ),
@@ -54,7 +54,7 @@ export const Route = createFileRoute("/maquinaria/$slug")({
     <div className="mx-auto max-w-3xl px-4 py-20 text-center">
       <h1 className="font-display text-3xl uppercase">No se pudo cargar el equipo</h1>
       <Link to="/maquinaria" className="mt-6 inline-block text-primary underline">
-        Ver toda la maquinaria
+        Ver todos los equipos en renta
       </Link>
     </div>
   ),
@@ -75,7 +75,7 @@ function EquipmentDetail() {
         to="/maquinaria"
         className="inline-flex items-center gap-2 text-sm font-semibold text-primary uppercase hover:underline"
       >
-        <ArrowLeft className="size-4" aria-hidden="true" /> Maquinaria
+        <ArrowLeft className="size-4" aria-hidden="true" /> Renta
       </Link>
 
       <p className="mt-8 text-sm font-semibold tracking-[0.25em] text-primary uppercase">
@@ -108,12 +108,21 @@ function EquipmentDetail() {
         <p className="mt-2 text-sm text-muted-foreground">
           Te respondemos por WhatsApp con la disponibilidad y la tarifa de renta.
         </p>
-        <WhatsAppButton
-          href={waEquipmentLink(data.name)}
-          event="click_whatsapp_equipment"
-          className="mt-6"
-          ariaLabel={`Cotizar ${data.name} por WhatsApp con Grupo RMC`}
-        />
+        <div className="mt-6 flex flex-wrap items-center gap-4">
+          <Link
+            to="/contacto"
+            search={{ item: data.name, machineId: data.slug }}
+            hash="cotizacion"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-semibold tracking-wide text-primary-foreground uppercase transition-colors hover:bg-primary/90"
+          >
+            Cotizar
+          </Link>
+          <WhatsAppButton
+            href={waEquipmentLink(data.name)}
+            event="click_whatsapp_equipment"
+            ariaLabel={`Cotizar ${data.name} por WhatsApp con Grupo RMC`}
+          />
+        </div>
       </div>
     </div>
   );

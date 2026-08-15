@@ -12,6 +12,11 @@ export const quoteSchema = z.object({
   startDate: z.string().trim().max(30).optional().or(z.literal("")),
   rentalDuration: z.string().trim().max(100).optional().or(z.literal("")),
   comments: z.string().trim().max(1000).optional().or(z.literal("")),
+  machineId: z
+    .string()
+    .trim()
+    .min(1, "Este campo es obligatorio")
+    .max(120, "Este campo es obligatorio"),
 });
 
 export type QuoteInput = z.infer<typeof quoteSchema>;
@@ -43,6 +48,7 @@ export const submitQuoteRequest = createServerFn({ method: "POST" })
       start_date: data.startDate || null,
       rental_duration: data.rentalDuration || null,
       comments: data.comments || null,
+      machine_identifier: data.machineId,
     });
     if (error) throw new Error(error.message);
     return { ok: true };
