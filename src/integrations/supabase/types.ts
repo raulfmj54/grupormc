@@ -73,6 +73,7 @@ export type Database = {
           id: string
           item: string | null
           location: string | null
+          machine_identifier: string | null
           rental_duration: string | null
           request_type: string
           start_date: string | null
@@ -84,6 +85,7 @@ export type Database = {
           id?: string
           item?: string | null
           location?: string | null
+          machine_identifier?: string | null
           rental_duration?: string | null
           request_type: string
           start_date?: string | null
@@ -95,6 +97,7 @@ export type Database = {
           id?: string
           item?: string | null
           location?: string | null
+          machine_identifier?: string | null
           rental_duration?: string | null
           request_type?: string
           start_date?: string | null

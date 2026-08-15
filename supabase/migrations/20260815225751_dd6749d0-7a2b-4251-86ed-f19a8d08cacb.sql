@@ -1,0 +1,1 @@
+DELETE FROM public.quote_requests WHERE full_name = 'Prueba QA' AND machine_identifier = 'VIN-TEST-001';
