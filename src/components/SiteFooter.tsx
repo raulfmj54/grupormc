@@ -6,8 +6,11 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import {
   CONTACT_ADDRESS,
   CONTACT_EMAIL,
+  CONTACT_EMAIL_LINK,
   CONTACT_HOURS,
   FACEBOOK_NAME,
+  PHONE_DISPLAY,
+  PHONE_LINK,
   WA_GENERAL_LINK,
   WHATSAPP_DISPLAY,
 } from "@/lib/contact";
@@ -41,7 +44,7 @@ export function SiteFooter() {
           </h2>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             <li><Link to="/" className="hover:text-primary">Inicio</Link></li>
-            <li><Link to="/maquinaria" className="hover:text-primary">Maquinaria</Link></li>
+            <li><Link to="/maquinaria" className="hover:text-primary">Renta</Link></li>
             <li><Link to="/repuestos" className="hover:text-primary">Repuestos</Link></li>
             <li><Link to="/servicios" className="hover:text-primary">Servicios</Link></li>
             <li><Link to="/contacto" className="hover:text-primary">Contacto</Link></li>
@@ -54,15 +57,33 @@ export function SiteFooter() {
           </h2>
           <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
             <li>
-              WhatsApp:{" "}
-              <span className="font-semibold text-foreground">{WHATSAPP_DISPLAY}</span>
+              <a href={PHONE_LINK} className="font-semibold text-foreground hover:text-primary">
+                {PHONE_DISPLAY}
+              </a>
+              <span className="block text-xs uppercase tracking-widest">Mobile</span>
+            </li>
+            <li>
+              <a
+                href={WA_GENERAL_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-foreground hover:text-primary"
+              >
+                {WHATSAPP_DISPLAY}
+              </a>
+              <span className="block text-xs uppercase tracking-widest">WhatsApp</span>
+            </li>
+            <li>
+              <a href={CONTACT_EMAIL_LINK} className="font-semibold text-foreground hover:text-primary">
+                {CONTACT_EMAIL}
+              </a>
+              <span className="block text-xs uppercase tracking-widest">Email</span>
             </li>
             <li>
               <FacebookLink event="click_facebook_footer">
                 {FACEBOOK_NAME} en Facebook
               </FacebookLink>
             </li>
-            {CONTACT_EMAIL ? <li>Correo: {CONTACT_EMAIL}</li> : null}
             {CONTACT_ADDRESS ? <li>Dirección: {CONTACT_ADDRESS}</li> : null}
             {CONTACT_HOURS ? <li>Horario: {CONTACT_HOURS}</li> : null}
           </ul>

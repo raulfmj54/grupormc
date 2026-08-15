@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 import { listEquipment } from "@/lib/catalog.functions";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { waEquipmentLink, WA_GENERAL_LINK } from "@/lib/contact";
+import { WA_GENERAL_LINK } from "@/lib/contact";
 
 const equipmentQuery = queryOptions({
   queryKey: ["equipment"],
@@ -14,7 +14,7 @@ const equipmentQuery = queryOptions({
 export const Route = createFileRoute("/maquinaria/")({
   head: () => ({
     meta: [
-      { title: "Maquinaria pesada en renta | Grupo RMC El Salvador" },
+      { title: "Renta de maquinaria pesada | Grupo RMC El Salvador" },
       {
         name: "description",
         content:
@@ -44,7 +44,7 @@ function MaquinariaPage() {
           Renta de equipo
         </p>
         <h1 className="mt-3 font-display text-4xl tracking-wide text-foreground uppercase sm:text-5xl">
-          Maquinaria pesada disponible
+          Equipos en renta disponibles
         </h1>
         <p className="mt-4 text-muted-foreground">
           Equipo listo para tu proyecto, con opciones por día, semana o mes.
@@ -68,14 +68,6 @@ function MaquinariaPage() {
               {item.short_description}
             </p>
             <div className="mt-6 flex flex-col gap-3">
-              <WhatsAppButton
-                href={waEquipmentLink(item.name)}
-                event="click_whatsapp_equipment"
-                size="sm"
-                ariaLabel={`Cotizar ${item.name} por WhatsApp con Grupo RMC`}
-              >
-                Cotizar por WhatsApp
-              </WhatsAppButton>
               <Link
                 to="/maquinaria/$slug"
                 params={{ slug: item.slug }}

@@ -80,7 +80,7 @@ function Index() {
                 to="/maquinaria"
                 className="rounded-md border-2 border-primary px-6 py-3.5 text-sm font-semibold tracking-wide text-primary uppercase transition-colors hover:bg-primary hover:text-primary-foreground"
               >
-                Ver maquinaria
+                Ver equipos en renta
               </Link>
               <FacebookLink event="click_facebook_header" />
             </div>

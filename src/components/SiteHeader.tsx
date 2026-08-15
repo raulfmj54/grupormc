@@ -3,13 +3,14 @@ import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 
 import logo from "@/assets/rmc-logo.jpg.asset.json";
-import { WA_GENERAL_LINK, WHATSAPP_DISPLAY } from "@/lib/contact";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { FacebookLink } from "@/components/FacebookLink";
+
+const quoteButtonClass =
+  "inline-flex items-center justify-center gap-2 rounded-md bg-whatsapp px-3 py-2 text-sm font-semibold tracking-wide text-whatsapp-foreground uppercase transition-transform duration-200 hover:-translate-y-0.5 hover:bg-whatsapp/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-whatsapp focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const navItems = [
   { to: "/", label: "Inicio" },
-  { to: "/maquinaria", label: "Maquinaria" },
+  { to: "/maquinaria", label: "Renta" },
   { to: "/repuestos", label: "Repuestos" },
   { to: "/servicios", label: "Servicios" },
   { to: "/contacto", label: "Contacto" },
@@ -57,9 +58,9 @@ export function SiteHeader() {
           <FacebookLink event="click_facebook_header" className="text-muted-foreground">
             Facebook
           </FacebookLink>
-          <WhatsAppButton href={WA_GENERAL_LINK} event="click_whatsapp_header" size="sm">
-            {WHATSAPP_DISPLAY}
-          </WhatsAppButton>
+          <Link to="/contacto" hash="cotizacion" className={quoteButtonClass}>
+            Cotizar
+          </Link>
         </div>
 
         <button
@@ -92,7 +93,14 @@ export function SiteHeader() {
               <FacebookLink event="click_facebook_header" className="px-2 text-muted-foreground">
                 Síguenos en Facebook
               </FacebookLink>
-              <WhatsAppButton href={WA_GENERAL_LINK} event="click_whatsapp_header" size="sm" />
+              <Link
+                to="/contacto"
+                hash="cotizacion"
+                onClick={() => setOpen(false)}
+                className={quoteButtonClass}
+              >
+                Cotizar
+              </Link>
             </div>
           </nav>
         </div>
