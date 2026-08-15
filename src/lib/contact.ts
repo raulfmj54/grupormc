@@ -13,7 +13,10 @@ export const FACEBOOK_NAME = "Grupo RMC";
  * Datos aún no confirmados. Se mantienen ocultos hasta contar con
  * información verificada: basta con llenar el valor para mostrarlos.
  */
-export const CONTACT_EMAIL: string | null = null;
+export const PHONE_DISPLAY = "7221-9349";
+export const PHONE_LINK = "tel:+50372219349";
+export const CONTACT_EMAIL: string = "info@grupormc-sv.com";
+export const CONTACT_EMAIL_LINK = "mailto:info@grupormc-sv.com";
 export const CONTACT_ADDRESS: string | null = null;
 export const CONTACT_HOURS: string | null = null;
 
@@ -46,6 +49,7 @@ export type QuoteMessageInput = {
   startDate?: string | null | undefined;
   rentalDuration?: string | null | undefined;
   comments?: string | null | undefined;
+  machineId?: string | null | undefined;
 };
 
 export function buildQuoteMessage(input: QuoteMessageInput): string {
@@ -55,6 +59,8 @@ export function buildQuoteMessage(input: QuoteMessageInput): string {
     `Nombre: ${input.fullName}`,
     `Tipo de solicitud: ${input.requestType}`,
   ];
+  if (input.machineId)
+    lines.push(`Número de parte / placa / VIN: ${input.machineId}`);
   if (input.item) lines.push(`Equipo o repuesto: ${input.item}`);
   if (input.location) lines.push(`Ubicación del proyecto: ${input.location}`);
   if (input.startDate) lines.push(`Fecha estimada: ${input.startDate}`);
