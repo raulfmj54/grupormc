@@ -1,0 +1,1 @@
+update public.equipment set image_url = '/__l5e/assets-v1/c167ec0d-787f-4603-a9cf-3a885e0dac02/excavadora-cat-320.jpg' where slug = 'excavadora-cat-320';
