@@ -6,7 +6,7 @@ import logo from "@/assets/rmc-logo.jpg.asset.json";
 import { FacebookLink } from "@/components/FacebookLink";
 
 const quoteButtonClass =
-  "inline-flex items-center justify-center gap-2 rounded-md bg-whatsapp px-3 py-2 text-sm font-semibold tracking-wide text-whatsapp-foreground uppercase transition-transform duration-200 hover:-translate-y-0.5 hover:bg-whatsapp/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-whatsapp focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "inline-flex items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-semibold tracking-wide text-primary-foreground uppercase transition-transform duration-200 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const navItems = [
   { to: "/", label: "Inicio" },
