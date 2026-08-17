@@ -111,14 +111,6 @@ function RepuestosPage() {
               <p className="mt-3 flex-1 text-sm text-muted-foreground">
                 {part.description}
               </p>
-              <WhatsAppButton
-                href={WA_SPARE_PARTS_LINK}
-                event="click_whatsapp_spare_parts"
-                size="sm"
-                className="mt-5"
-              >
-                Cotizar
-              </WhatsAppButton>
             </article>
           ))}
         </div>
