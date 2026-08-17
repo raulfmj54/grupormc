@@ -86,6 +86,15 @@ function EquipmentDetail() {
       </h1>
       <p className="mt-4 max-w-2xl text-muted-foreground">{data.description}</p>
 
+      {data.image_url ? (
+        <img
+          src={data.image_url}
+          alt={`${data.name} en renta con Grupo RMC`}
+          loading="lazy"
+          className="mt-8 aspect-[4/3] w-full rounded-lg border border-border object-cover"
+        />
+      ) : null}
+
       {specs.length > 0 ? (
         <dl className="mt-8 grid gap-4 sm:grid-cols-3">
           {specs.map((spec) => (
