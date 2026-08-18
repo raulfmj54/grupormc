@@ -15,6 +15,7 @@ import { Route as RepuestosRouteImport } from './routes/repuestos'
 import { Route as ServiciosRouteImport } from './routes/servicios'
 import { Route as MaquinariaIndexRouteImport } from './routes/maquinaria.index'
 import { Route as MaquinariaSlugRouteImport } from './routes/maquinaria.$slug'
+import { Route as ApiPublicCatalogSplatRouteImport } from './routes/api/public/catalog/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const MaquinariaSlugRoute = MaquinariaSlugRouteImport.update({
   path: '/maquinaria/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicCatalogSplatRoute = ApiPublicCatalogSplatRouteImport.update({
+  id: '/api/public/catalog/$',
+  path: '/api/public/catalog/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/servicios': typeof ServiciosRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria/': typeof MaquinariaIndexRoute
+  '/api/public/catalog/$': typeof ApiPublicCatalogSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/servicios': typeof ServiciosRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria': typeof MaquinariaIndexRoute
+  '/api/public/catalog/$': typeof ApiPublicCatalogSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/servicios': typeof ServiciosRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria/': typeof MaquinariaIndexRoute
+  '/api/public/catalog/$': typeof ApiPublicCatalogSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/maquinaria/$slug'
     | '/maquinaria/'
+    | '/api/public/catalog/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/maquinaria/$slug'
     | '/maquinaria'
+    | '/api/public/catalog/$'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/maquinaria/$slug'
     | '/maquinaria/'
+    | '/api/public/catalog/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   ServiciosRoute: typeof ServiciosRoute
   MaquinariaSlugRoute: typeof MaquinariaSlugRoute
   MaquinariaIndexRoute: typeof MaquinariaIndexRoute
+  ApiPublicCatalogSplatRoute: typeof ApiPublicCatalogSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MaquinariaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/catalog/$': {
+      id: '/api/public/catalog/$'
+      path: '/api/public/catalog/$'
+      fullPath: '/api/public/catalog/$'
+      preLoaderRoute: typeof ApiPublicCatalogSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServiciosRoute: ServiciosRoute,
   MaquinariaSlugRoute: MaquinariaSlugRoute,
   MaquinariaIndexRoute: MaquinariaIndexRoute,
+  ApiPublicCatalogSplatRoute: ApiPublicCatalogSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
