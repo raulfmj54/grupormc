@@ -1,37 +1,43 @@
-# Arreglar las fotos rotas del catálogo
+# Fotos rotas del catálogo: migración + panel para subir imágenes
 
 ## Por qué se ven rotas
 
-Las fotos que están cargadas en la base de datos usan enlaces de Google Drive del tipo
-`https://drive.google.com/file/d/.../view?usp=sharing`. Esa URL es una **página web** de Drive
-(con visor, botones, login), no el archivo de imagen. Cuando el sitio la pone dentro de una
-etiqueta de imagen, el navegador recibe HTML en vez de una foto y muestra el ícono de enlace roto.
-Además, si el archivo no es público, Drive redirige a la pantalla de inicio de sesión.
+Las fotos guardadas en la base de datos usan enlaces de Google Drive tipo
+`https://drive.google.com/file/d/.../view`. Esa dirección es una **página web** de Drive (visor,
+botones, login), no el archivo de imagen. El navegador recibe HTML en lugar de una foto y muestra
+el ícono de enlace roto. La CAT 320 sí se ve en su ficha porque esa imagen ya fue descargada y
+guardada dentro del proyecto.
 
-La única foto que sí se ve (Excavadora CAT 320 en su ficha) funciona porque ya fue descargada y
-guardada como archivo del proyecto en un caso anterior.
+## Parte 1 — Migrar las imágenes actuales (equipos y repuestos)
 
-## Solución propuesta
+1. Descargar desde Drive cada imagen referenciada hoy en `equipment` y `spare_parts`.
+2. Subirlas al almacenamiento del backend, que entrega una URL directa y estable.
+3. Actualizar `image_url` de cada registro con esa URL directa.
+4. Si un registro sigue sin foto, se mantiene el ícono amarillo en el recuadro redondo (sin cambios
+   de diseño).
+5. Verificar catálogo de Renta, ficha técnica y Repuestos.
 
-1. Descargar, desde Drive, cada imagen referenciada en la base de datos (equipos y repuestos).
-2. Subirlas al almacenamiento de imágenes del proyecto (CDN de Lovable), que entrega URLs
-   directas y estables.
-3. Actualizar `image_url` en las tablas `equipment` y `spare_parts` con esas URLs directas.
-4. Dejar el comportamiento actual: si un registro no tiene foto, se sigue mostrando el ícono
-   amarillo dentro del recuadro redondo.
-5. Verificar en el sitio que las imágenes cargan en el catálogo de Renta, en la ficha técnica y
-   en Repuestos.
+Nota: si algún archivo de Drive no es público, no se puede descargar; en ese caso te aviso cuáles
+faltan y los subes desde el panel nuevo.
 
-## Para futuras cargas
+## Parte 2 — Panel de administración para subir fotos
 
-Para que no vuelva a pasar, hay dos caminos (elige el que prefieras más adelante):
-- Seguir enviándome los enlaces de Drive y yo los convierto y subo al proyecto, o
-- Activar Almacenamiento del backend con un panel simple para subir fotos directamente,
-  sin pasar por Drive.
+- Nueva página de acceso (`/auth`) con inicio de sesión por correo y Google.
+- Nueva sección privada `/admin`, visible solo para usuarios con rol de administrador
+  (la tabla de roles ya existe; te asigno el rol de admin a tu cuenta).
+- Dentro del panel: lista de equipos en renta y de repuestos, con opción de
+  **subir o reemplazar la foto** de cada uno arrastrando el archivo o eligiéndolo.
+  Vista previa inmediata y guardado directo en el registro.
+- Validaciones: solo imágenes (JPG, PNG, WEBP), tamaño máximo razonable, y mensaje de error claro.
+- El sitio público no cambia de aspecto: sigue leyendo `image_url` como hoy.
 
 ## Detalle técnico
 
-- Descarga vía el conector de Google Drive (`files/{id}?alt=media`), no `fetch` del enlace `/view`.
-- Subida con `lovable-assets create`, guardando los punteros `.asset.json` en `src/assets/`.
-- Migración SQL de actualización de `image_url` por `slug` / `id`; sin cambios de esquema.
-- Sin cambios de diseño, colores, tipografía ni navegación.
+- Bucket de Storage público `catalog` con políticas de escritura solo para rol `admin`
+  y lectura pública; `image_url` guarda la URL pública del objeto.
+- Descarga de Drive vía el conector de Google Drive (`files/{id}?alt=media`), no `fetch` al `/view`.
+- Rutas nuevas: `src/routes/auth.tsx` y `src/routes/_authenticated/admin.*` con guardia de sesión;
+  las mutaciones (subir/actualizar `image_url`) van en server functions con `requireSupabaseAuth`
+  y verificación de rol admin.
+- Sin cambios de esquema en `equipment` / `spare_parts`; solo actualización de datos.
+- Se conservan diseño, colores, tipografía, componentes y navegación actuales.
