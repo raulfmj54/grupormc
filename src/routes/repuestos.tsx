@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
+import { Wrench } from "lucide-react";
+
 
 import { listSpareParts } from "@/lib/catalog.functions";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
