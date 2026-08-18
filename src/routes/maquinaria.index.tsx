@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Truck } from "lucide-react";
 
 import { listEquipment } from "@/lib/catalog.functions";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -64,9 +64,24 @@ function MaquinariaPage() {
             <h2 className="mt-2 font-display text-xl tracking-wide text-card-foreground uppercase">
               {item.name}
             </h2>
+            <div className="mt-4 size-24 overflow-hidden rounded-full border border-border bg-muted">
+              {item.image_url ? (
+                <img
+                  src={item.image_url}
+                  alt={item.name}
+                  loading="lazy"
+                  className="size-full object-cover"
+                />
+              ) : (
+                <div className="flex size-full items-center justify-center">
+                  <Truck className="size-8 text-primary" aria-hidden="true" />
+                </div>
+              )}
+            </div>
             <p className="mt-3 flex-1 text-sm text-muted-foreground">
               {item.short_description}
             </p>
+
             <div className="mt-6 flex flex-col gap-3">
               <Link
                 to="/maquinaria/$slug"
