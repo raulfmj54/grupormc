@@ -108,9 +108,24 @@ function RepuestosPage() {
               <h3 className="mt-2 font-display text-lg tracking-wide text-card-foreground uppercase">
                 {part.name}
               </h3>
+              <div className="mt-4 size-24 overflow-hidden rounded-full border border-border bg-muted">
+                {part.image_url ? (
+                  <img
+                    src={part.image_url}
+                    alt={part.name}
+                    loading="lazy"
+                    className="size-full object-cover"
+                  />
+                ) : (
+                  <div className="flex size-full items-center justify-center">
+                    <Wrench className="size-8 text-primary" aria-hidden="true" />
+                  </div>
+                )}
+              </div>
               <p className="mt-3 flex-1 text-sm text-muted-foreground">
                 {part.description}
               </p>
+
             </article>
           ))}
         </div>
