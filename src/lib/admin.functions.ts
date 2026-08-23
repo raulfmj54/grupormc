@@ -1,7 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 
 const uploadSchema = z.object({
   kind: z.enum(["equipment", "spare_parts"]),
@@ -13,7 +15,7 @@ const uploadSchema = z.object({
 });
 
 // El primer usuario que entra al panel queda como administrador.
-async function ensureAdmin(supabase: any, userId: string) {
+async function ensureAdmin(supabase: SupabaseClient<Database>, userId: string) {
   const { data: isAdmin } = await supabase.rpc("has_role", {
     _user_id: userId,
     _role: "admin",
