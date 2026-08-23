@@ -63,11 +63,9 @@ export const uploadCatalogImage = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => uploadSchema.parse(input))
   .handler(async ({ data, context }) => {
-    const { data: isAdmin } = await context.supabase.rpc("has_role", {
-      _user_id: context.userId,
-      _role: "admin",
-    });
+    const isAdmin = await ensureAdmin(context.supabase, context.userId);
     if (!isAdmin) throw new Error("Forbidden");
+
 
     const bytes = Buffer.from(data.base64, "base64");
     if (bytes.byteLength > 5 * 1024 * 1024) {
