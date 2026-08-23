@@ -10,10 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as RepuestosRouteImport } from './routes/repuestos'
 import { Route as ServiciosRouteImport } from './routes/servicios'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as MaquinariaIndexRouteImport } from './routes/maquinaria.index'
 import { Route as MaquinariaSlugRouteImport } from './routes/maquinaria.$slug'
 import { Route as ApiPublicCatalogSplatRouteImport } from './routes/api/public/catalog/$'
@@ -21,6 +23,10 @@ import { Route as ApiPublicCatalogSplatRouteImport } from './routes/api/public/c
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -42,6 +48,11 @@ const ServiciosRoute = ServiciosRouteImport.update({
   id: '/servicios',
   path: '/servicios',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const MaquinariaIndexRoute = MaquinariaIndexRouteImport.update({
   id: '/maquinaria/',
@@ -65,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/contacto': typeof ContactoRoute
   '/repuestos': typeof RepuestosRoute
   '/servicios': typeof ServiciosRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria/': typeof MaquinariaIndexRoute
   '/api/public/catalog/$': typeof ApiPublicCatalogSplatRoute
@@ -75,6 +87,7 @@ export interface FileRoutesByTo {
   '/contacto': typeof ContactoRoute
   '/repuestos': typeof RepuestosRoute
   '/servicios': typeof ServiciosRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria': typeof MaquinariaIndexRoute
   '/api/public/catalog/$': typeof ApiPublicCatalogSplatRoute
@@ -82,10 +95,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/contacto': typeof ContactoRoute
   '/repuestos': typeof RepuestosRoute
   '/servicios': typeof ServiciosRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/maquinaria/$slug': typeof MaquinariaSlugRoute
   '/maquinaria/': typeof MaquinariaIndexRoute
   '/api/public/catalog/$': typeof ApiPublicCatalogSplatRoute
@@ -98,6 +113,7 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/repuestos'
     | '/servicios'
+    | '/admin'
     | '/maquinaria/$slug'
     | '/maquinaria/'
     | '/api/public/catalog/$'
@@ -108,16 +124,19 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/repuestos'
     | '/servicios'
+    | '/admin'
     | '/maquinaria/$slug'
     | '/maquinaria'
     | '/api/public/catalog/$'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/auth'
     | '/contacto'
     | '/repuestos'
     | '/servicios'
+    | '/_authenticated/admin'
     | '/maquinaria/$slug'
     | '/maquinaria/'
     | '/api/public/catalog/$'
@@ -125,6 +144,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ContactoRoute: typeof ContactoRoute
   RepuestosRoute: typeof RepuestosRoute
@@ -141,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -171,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiciosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/maquinaria/': {
       id: '/maquinaria/'
       path: '/maquinaria'
@@ -195,8 +229,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ContactoRoute: ContactoRoute,
   RepuestosRoute: RepuestosRoute,
