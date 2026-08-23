@@ -12,14 +12,35 @@ const uploadSchema = z.object({
   base64: z.string().min(16).max(8_000_000),
 });
 
+// El primer usuario que entra al panel queda como administrador.
+async function ensureAdmin(supabase: any, userId: string) {
+  const { data: isAdmin } = await supabase.rpc("has_role", {
+    _user_id: userId,
+    _role: "admin",
+  });
+  if (isAdmin) return true;
+
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { count, error } = await supabaseAdmin
+    .from("user_roles")
+    .select("id", { count: "exact", head: true })
+    .eq("role", "admin");
+  if (error) throw new Error(error.message);
+  if ((count ?? 0) > 0) return false;
+
+  const { error: insertError } = await supabaseAdmin
+    .from("user_roles")
+    .insert({ user_id: userId, role: "admin" });
+  if (insertError) throw new Error(insertError.message);
+  return true;
+}
+
 export const listCatalogForAdmin = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { data: isAdmin } = await context.supabase.rpc("has_role", {
-      _user_id: context.userId,
-      _role: "admin",
-    });
+    const isAdmin = await ensureAdmin(context.supabase, context.userId);
     if (!isAdmin) throw new Error("Forbidden");
+
 
     const [equipment, spareParts] = await Promise.all([
       context.supabase
